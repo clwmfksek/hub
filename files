@@ -1,0 +1,136 @@
+/// app/page.tsx
+import React from 'react';
+import Link from 'next/link';
+import AnimatedText from './AnimatedText';
+import ArrowRight from './ArrowRight';
+import Button from './Button';
+
+const categories = [
+  { name: 'Category 1', href: '/category1', color: 'bg-pastel-blue' },
+  { name: 'Category 2', href: '/category2', color: 'bg-pastel-green' },
+  { name: 'Category 3', href: '/category3', color: 'bg-pastel-pink' },
+];
+
+const Home = () => {
+  return (
+    <div>
+      <section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center p-6 bg-sandy-beige">
+        <div className="relative z-10 max-w-5xl w-full">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 text-gray-900">
+            <AnimatedText /> for a better life.
+          </h1>
+          <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-12 text-gray-700">
+            {'Discover curated supplement stacks, backed by science and nature, to unlock your full potential.'}
+          </p>
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6">
+            {categories.map((category) => (
+              <Link href={category.href} key={category.name} className="group outline-none rounded-2xl focus-visible:ring-2 focus-visible:ring-sage-green focus-visible:ring-offset-2 focus-visible:ring-offset-transparent">
+                <div className="relative rounded-2xl overflow-hidden transition-transform duration-300 group-hover:-translate-y-0.5">
+                  {/* Soft category tint */}
+                  <div className={`${category.color} absolute inset-0 opacity-25`} aria-hidden="true" />
+                  {/* Glass panel */}
+                  <div className="relative p-5 bg-white/70 backdrop-blur-xl border border-black/5 shadow-[0_8px_24px_rgba(0,0,0,0.08)] group-hover:bg-white/80 transition-colors duration-300">
+                    <div className="flex items-center justify-between gap-3">
+                      <h3 className="text-base sm:text-lg font-semibold text-gray-900">{category.name}</h3>
+                      <ArrowRight className="h-5 w-5 text-gray-700/70 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                    </div>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ** rest of code here ** */}
+    </div>
+  );
+};
+
+export default Home;
+
+// app/stacks/page.tsx
+import React, { useState } from 'react';
+import Link from 'next/link';
+import Button from './Button';
+
+const categories = [
+  { name: 'Category 1', href: '/category1' },
+  { name: 'Category 2', href: '/category2' },
+  { name: 'Category 3', href: '/category3' },
+];
+
+const StacksPage = () => {
+  const [activeFilter, setActiveFilter] = useState('');
+
+  return (
+    <div>
+      <div className="flex flex-wrap justify-center gap-4">
+        {categories.map((category) => (
+          <Button
+            key={category.name}
+            variant="outline"
+            onClick={() => setActiveFilter(category.name)}
+            className={`rounded-full transition-all duration-200 border border-black/10 backdrop-blur-md px-4 py-2
+              ${activeFilter === category.name
+                ? 'bg-white/80 shadow-sm'
+                : 'bg-white/60 hover:bg-white/80'
+              }`}
+          >
+            {/* Remove emoji: only show name */}
+            {category.name}
+          </Button>
+        ))}
+      </div>
+
+      {/* ** rest of code here ** */}
+    </div>
+  );
+};
+
+export default StacksPage;
+
+// app/influencers/page.tsx
+import React from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import Button from './Button';
+
+const influencers = [
+  { name: 'Influencer 1', image: '/influencer1.jpg', specialty: 'Specialty 1', stacks: ['Stack 1', 'Stack 2'] },
+  { name: 'Influencer 2', image: '/influencer2.jpg', specialty: 'Specialty 2', stacks: ['Stack 3', 'Stack 4'] },
+];
+
+const InfluencersPage = () => {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {influencers.map((influencer) => (
+        <div key={influencer.name} className="bg-white rounded-2xl shadow-lg p-6 flex flex-col items-center text-center transition-transform duration-300 hover:-translate-y-1">
+          <Image src={influencer.image || "/placeholder.svg"} alt={influencer.name} width={88} height={88} className="rounded-full mb-4 object-cover" />
+          <h2 className="text-xl font-bold text-gray-900">{influencer.name}</h2>
+          <p className="text-sage-green font-medium mb-5">{influencer.specialty}</p>
+
+          <div className="w-full">
+            <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-3">Top Stacks</h3>
+            <div className="grid grid-cols-3 gap-2">
+              {influencer.stacks.map((stack) => (
+                <Link href={`/stacks?search=${stack}`} key={stack} className="block">
+                  <div className="bg-sandy-beige rounded-lg py-2 px-2 text-xs font-medium text-gray-700 hover:bg-sage-green-100 transition-colors text-ellipsis overflow-hidden whitespace-nowrap">
+                    {stack}
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 w-full">
+            <Button className="w-full bg-sage-green hover:bg-sage-green-600">View Full Profile</Button>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default InfluencersPage;
