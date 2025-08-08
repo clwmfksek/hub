@@ -2,11 +2,13 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "./components/header";
+import { getServerClient } from "@/lib/supabase/server";
 import { Footer } from "./components/footer";
 import { CartProvider } from "./context/cart-context";
 import { GoogleAnalytics } from "./components/google-analytics";
 import { GaRouteListener } from "./components/ga-route-listener";
 import { Suspense } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,11 +19,17 @@ export const metadata: Metadata = {
   generator: "v0.dev",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  let initialLoggedIn = false;
+  try {
+    const supabase = await getServerClient();
+    const { data } = await supabase.auth.getSession();
+    initialLoggedIn = Boolean(data.session);
+  } catch {}
   return (
     <html lang="en">
       <body className={`${inter.className} text-gray-800`}>
@@ -30,12 +38,13 @@ export default function RootLayout({
           <GaRouteListener />
         </Suspense>
         <CartProvider>
-          <Header />
+          <Header initialLoggedIn={initialLoggedIn} />
           <main>
             <Suspense fallback={null}>{children}</Suspense>
           </main>
           <Footer />
         </CartProvider>
+        <Toaster />
       </body>
     </html>
   );

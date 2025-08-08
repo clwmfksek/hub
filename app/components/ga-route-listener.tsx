@@ -15,6 +15,10 @@ export function GaRouteListener(): null {
     if (pathname) {
       sendPageView(pathWithQuery);
     }
+    // 헤더의 로그인 상태가 라우팅 후 갱신되도록 브로드캐스트
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new Event("auth:maybe-changed"));
+    }
   }, [pathname, searchParams]);
 
   return null;
