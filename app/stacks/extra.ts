@@ -4,7 +4,7 @@ export const extraStacks: StackItem[] = [
   {
     id: "nmnpro",
     name: "NMN Pro",
-    category: "Live longer",
+    category: "Balance metabolism",
     image: "/supplement-3.png",
     ingredients: ["NMN", "Pterostilbene", "Trans-Resveratrol"],
     description:
@@ -24,7 +24,7 @@ export const extraStacks: StackItem[] = [
   {
     id: "deepsleepmax",
     name: "Deep Sleep Max",
-    category: "Better sleep",
+    category: "Sleep better",
     image: "/supplement-1.png",
     ingredients: ["Magnesium Glycinate", "L-Theanine", "Apigenin"],
     description:
@@ -34,7 +34,7 @@ export const extraStacks: StackItem[] = [
   {
     id: "glowcollagenplus",
     name: "Glow Collagen+",
-    category: "Glow naturally",
+    category: "Glow beautifully",
     image: "/supplement-4.png",
     ingredients: ["Collagen Peptides", "Vitamin C", "Hyaluronic Acid"],
     description: "Nourishes skin, hair, and nails for a healthy, natural glow.",
@@ -43,7 +43,7 @@ export const extraStacks: StackItem[] = [
   {
     id: "energyprime",
     name: "Energy Prime",
-    category: "More energy",
+    category: "Boost energy",
     image: "/supplement-1.png",
     ingredients: ["Creatine Monohydrate", "Beta-Alanine", "Vitamin B12"],
     description: "Smooth, sustained energy and performance without jitters.",
@@ -52,7 +52,7 @@ export const extraStacks: StackItem[] = [
   {
     id: "immuneshieldplus",
     name: "Immune Shield+",
-    category: "Stay healthy",
+    category: "Strengthen immunity",
     image: "/supplement-2.png",
     ingredients: ["Vitamin D3+K2", "Zinc Picolinate", "Quercetin"],
     description:

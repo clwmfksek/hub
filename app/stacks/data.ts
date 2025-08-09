@@ -16,21 +16,21 @@ export type StackItem = {
 
 export const categories: Category[] = [
   { name: "All", icon: "📋", color: "bg-gray-100" },
-  { name: "Better sleep", icon: "🌙", color: "bg-sleep-purple" },
+  { name: "Sleep better", icon: "🌙", color: "bg-sleep-purple" },
   { name: "Boost focus", icon: "🧠", color: "bg-focus-blue" },
-  { name: "Live longer", icon: "🌱", color: "bg-longevity-green" },
-  { name: "Glow naturally", icon: "✨", color: "bg-glow-pink" },
-  { name: "More energy", icon: "⚡", color: "bg-energy-yellow" },
-  { name: "Stay healthy", icon: "🛡️", color: "bg-health-teal" },
+  { name: "Glow beautifully", icon: "✨", color: "bg-glow-pink" },
+  { name: "Balance metabolism", icon: "🌱", color: "bg-longevity-green" },
+  { name: "Boost energy", icon: "⚡", color: "bg-energy-yellow" },
+  { name: "Strengthen immunity", icon: "🛡️", color: "bg-health-teal" },
 ];
 
 export const categorySlugToName: Record<string, string> = {
-  "better-sleep": "Better sleep",
+  "better-sleep": "Sleep better",
   "boost-focus": "Boost focus",
-  "live-longer": "Live longer",
-  "glow-naturally": "Glow naturally",
-  "more-energy": "More energy",
-  "stay-healthy": "Stay healthy",
+  "glow-naturally": "Glow beautifully",
+  "live-longer": "Balance metabolism",
+  "more-energy": "Boost energy",
+  "stay-healthy": "Strengthen immunity",
 };
 
 export const categoryNameToSlug: Record<string, string> = Object.fromEntries(
@@ -41,7 +41,7 @@ const baseStacks: StackItem[] = [
   {
     id: "sleepwell",
     name: "SleepWell",
-    category: "Better sleep",
+    category: "Sleep better",
     image: "/supplement-1.png",
     ingredients: ["Melatonin", "L-Theanine", "Magnesium"],
     description: "Drift into a deep, restorative sleep and wake up refreshed.",
@@ -60,7 +60,7 @@ const baseStacks: StackItem[] = [
   {
     id: "vitality",
     name: "Vitality",
-    category: "Live longer",
+    category: "Balance metabolism",
     image: "/supplement-3.png",
     ingredients: ["Resveratrol", "NMN", "CoQ10"],
     description: "Support cellular health and promote longevity from within.",
@@ -69,7 +69,7 @@ const baseStacks: StackItem[] = [
   {
     id: "radiance",
     name: "Radiance",
-    category: "Glow naturally",
+    category: "Glow beautifully",
     image: "/supplement-4.png",
     ingredients: ["Collagen", "Hyaluronic Acid", "Biotin"],
     description:
@@ -79,7 +79,7 @@ const baseStacks: StackItem[] = [
   {
     id: "energyboost",
     name: "EnergyBoost",
-    category: "More energy",
+    category: "Boost energy",
     image: "/supplement-1.png",
     ingredients: ["Cordyceps", "B-Vitamins", "Ginseng"],
     description:
@@ -89,7 +89,7 @@ const baseStacks: StackItem[] = [
   {
     id: "immunityguard",
     name: "ImmunityGuard",
-    category: "Stay healthy",
+    category: "Strengthen immunity",
     image: "/supplement-2.png",
     ingredients: ["Vitamin C", "Zinc", "Elderberry"],
     description:

@@ -4,7 +4,8 @@ import { useState, useCallback } from "react";
 import { AnimatedText, phraseColorClass } from "./animated-text";
 
 export default function HeroHeader() {
-  const [activePhrase, setActivePhrase] = useState<string>("Better sleep");
+  const [activePhrase, setActivePhrase] =
+    useState<string>("Sleep Optimization");
 
   const handleChange = useCallback((phrase: string) => {
     setActivePhrase(phrase);
@@ -15,7 +16,10 @@ export default function HeroHeader() {
   return (
     <>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4 text-stone-900">
-        <AnimatedText onPhraseChange={handleChange} /> for a better life.
+        <span className="block">
+          <AnimatedText onPhraseChange={handleChange} />
+        </span>
+        <span className="block">for your own longevity plan.</span>
       </h1>
       <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-12 text-stone-600">
         Discover curated supplement stacks, backed by science and nature, to

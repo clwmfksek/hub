@@ -18,10 +18,13 @@ import {
 
 const categories = [
   {
-    name: "Better sleep",
+    name: "Sleep better",
     href: "/stacks?category=better-sleep",
     color: "bg-sleep-purple",
     tint: "bg-sleep-purple/40",
+    hoverPanelBg: "group-hover:bg-sleep-purple",
+    textColor: "text-violet-700",
+    highlight: "first",
     icon: "🌙",
     image: "/calming-chamomile.png",
   },
@@ -30,38 +33,49 @@ const categories = [
     href: "/stacks?category=boost-focus",
     color: "bg-focus-blue",
     tint: "bg-focus-blue/40",
+    hoverPanelBg: "group-hover:bg-focus-blue",
+    textColor: "text-blue-700",
     icon: "🧠",
     image: "/sunlit-ginkgo-leaves.png",
   },
   {
-    name: "Live longer",
-    href: "/stacks?category=live-longer",
-    color: "bg-longevity-green",
-    tint: "bg-longevity-green/40",
-    icon: "🌱",
-    image: "/ancient-tree-rings.png",
-  },
-  {
-    name: "Glow naturally",
+    name: "Glow beautifully",
     href: "/stacks?category=glow-naturally",
     color: "bg-glow-pink",
     tint: "bg-glow-pink/40",
+    hoverPanelBg: "group-hover:bg-glow-pink",
+    textColor: "text-pink-600",
+    highlight: "first",
     icon: "✨",
     image: "/dewy-rose-petals.png",
   },
   {
-    name: "More energy",
+    name: "Balance metabolism",
+    href: "/stacks?category=live-longer",
+    color: "bg-longevity-green",
+    tint: "bg-longevity-green/40",
+    hoverPanelBg: "group-hover:bg-longevity-green",
+    textColor: "text-emerald-700",
+    icon: "🌱",
+    image: "/ancient-tree-rings.png",
+  },
+  {
+    name: "Boost energy",
     href: "/stacks?category=more-energy",
     color: "bg-energy-yellow",
     tint: "bg-energy-yellow/40",
+    hoverPanelBg: "group-hover:bg-energy-yellow",
+    textColor: "text-amber-600",
     icon: "⚡",
     image: "/sunflower-field.png",
   },
   {
-    name: "Stay healthy",
+    name: "Strengthen immunity",
     href: "/stacks?category=stay-healthy",
     color: "bg-health-teal",
     tint: "bg-health-teal/40",
+    hoverPanelBg: "group-hover:bg-health-teal",
+    textColor: "text-teal-700",
     icon: "🛡️",
     image: "/vibrant-elderberries.png",
   },
@@ -113,7 +127,10 @@ export default function LandingPage() {
       <section className="relative w-full min-h-screen flex flex-col items-center justify-center text-center p-6 bg-sandy-beige">
         <div className="relative max-w-5xl w-full">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tighter mb-4 text-stone-900">
-            <AnimatedText /> for a better life.
+            <span className="block">
+              <AnimatedText />
+            </span>
+            <span className="block">for your own longevity plan.</span>
           </h1>
           <p className="text-lg md:text-xl max-w-2xl mx-auto mb-10 md:mb-12 text-stone-600">
             Discover curated supplement stacks, backed by science and nature, to
@@ -141,31 +158,40 @@ export default function LandingPage() {
                     aria-hidden="true"
                   />
 
-                  {/* Background image with hover reveal */}
-                  <div className="absolute inset-0" aria-hidden="true">
-                    <Image
-                      src={category.image}
-                      alt={category.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover opacity-0 scale-100 rounded-3xl will-change-transform motion-safe:transition motion-safe:duration-300 group-hover:opacity-100 group-hover:scale-105"
-                    />
-                  </div>
+                  {/* Removed background image and heavy tint for cleaner hover */}
 
-                  {/* Tinted overlay only on hover */}
+                  {/* Panel with category-colored hover */}
                   <div
-                    className={`absolute inset-0 ${category.tint} rounded-3xl opacity-0 transition-opacity duration-300 group-hover:opacity-90 group-hover:mix-blend-multiply`}
-                    aria-hidden="true"
-                  />
-
-                  {/* Glass panel */}
-                  <div className="relative p-5 sm:p-6 bg-white/65 backdrop-blur-xl ring-1 ring-stone-200/70 shadow-sm motion-safe:group-hover:shadow-lg rounded-3xl transition-colors group-hover:bg-white/50 group-hover:ring-stone-300">
+                    className={`relative p-5 sm:p-6 bg-white/65 backdrop-blur-xl ring-1 ring-stone-200/70 shadow-sm motion-safe:group-hover:shadow-lg rounded-3xl transition-colors ${category.hoverPanelBg} group-hover:ring-stone-300`}
+                  >
                     <div className="flex items-center justify-between gap-3">
-                      <h3 className="text-base sm:text-lg font-semibold text-stone-900 group-hover:text-stone-950 line-clamp-2">
-                        {category.name}
+                      <h3 className="text-base sm:text-lg font-semibold text-stone-900 group-hover:text-white line-clamp-2">
+                        {category.highlight === "first" ? (
+                          <>
+                            <span
+                              className={`${category.textColor} group-hover:text-white`}
+                            >
+                              {category.name.split(" ")[0]}
+                            </span>{" "}
+                            <span>
+                              {category.name.split(" ").slice(1).join(" ")}
+                            </span>
+                          </>
+                        ) : (
+                          <>
+                            <span>
+                              {category.name.split(" ").slice(0, -1).join(" ")}{" "}
+                            </span>
+                            <span
+                              className={`${category.textColor} group-hover:text-white`}
+                            >
+                              {category.name.split(" ").slice(-1).join(" ")}
+                            </span>
+                          </>
+                        )}
                       </h3>
                       {/* subtle arrow on hover for affordance */}
-                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-stone-900/5 text-stone-500 opacity-0 -translate-x-1 motion-safe:transition motion-safe:duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-stone-900/10 group-hover:text-stone-700">
+                      <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-stone-900/5 text-stone-500 opacity-0 -translate-x-1 motion-safe:transition motion-safe:duration-300 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-white/20 group-hover:text-white/90">
                         <svg
                           className="h-5 w-5"
                           viewBox="0 0 24 24"

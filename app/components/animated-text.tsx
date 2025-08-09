@@ -4,21 +4,21 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export const phrases = [
-  "Better sleep",
-  "Boost focus",
-  "Live longer",
-  "Glow naturally",
-  "More energy",
-  "Stay healthy",
+  "Sleep Optimization",
+  "Cognitive Enhancement",
+  "Beauty / Inner Glow",
+  "Metabolic & Weight",
+  "Energy Boost",
+  "Longevity & Immune",
 ];
 
 export const phraseColorClass: Record<string, string> = {
-  "Better sleep": "text-violet-700",
-  "Boost focus": "text-blue-700",
-  "Live longer": "text-emerald-700",
-  "Glow naturally": "text-pink-600",
-  "More energy": "text-amber-600",
-  "Stay healthy": "text-teal-700",
+  "Sleep Optimization": "text-violet-700",
+  "Cognitive Enhancement": "text-blue-700",
+  "Beauty / Inner Glow": "text-pink-600",
+  "Metabolic & Weight": "text-teal-700",
+  "Energy Boost": "text-amber-600",
+  "Longevity & Immune": "text-emerald-700",
 };
 
 type AnimatedTextProps = {
