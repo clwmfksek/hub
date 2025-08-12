@@ -1,13 +1,29 @@
 "use client";
 
 import Link from "next/link";
-import { Leaf, ShoppingCart } from "lucide-react";
+import {
+  Leaf,
+  ShoppingCart,
+  User,
+  Package,
+  RefreshCw,
+  List as ListIcon,
+  BadgeDollarSign,
+  Star,
+  MessageSquare,
+  LogOut,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { getServerClient } from "@/lib/supabase/server";
 import { cookies } from "next/headers";
 import { useEffect, useState } from "react";
 import { useCart } from "../context/cart-context";
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+} from "@/components/ui/popover";
 
 export function Header({
   initialLoggedIn = false,
@@ -17,6 +33,7 @@ export function Header({
   const { getItemCount } = useCart();
   const itemCount = getItemCount();
   const [loggedIn, setLoggedIn] = useState(initialLoggedIn);
+  const [userEmail, setUserEmail] = useState<string | null>(null);
 
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
@@ -29,6 +46,8 @@ export function Header({
         const { data } = await supabase.auth.getSession();
         setLoggedIn(Boolean(data.session));
       }
+      const { data: userData } = await supabase.auth.getUser();
+      setUserEmail(userData.user?.email ?? null);
       const { data: sub } = supabase.auth.onAuthStateChange(() => {
         window.dispatchEvent(new Event("auth:maybe-changed"));
       });
@@ -40,6 +59,8 @@ export function Header({
       const supabase = getBrowserClient();
       const { data } = await supabase.auth.getSession();
       setLoggedIn(Boolean(data.session));
+      const { data: userData } = await supabase.auth.getUser();
+      setUserEmail(userData.user?.email ?? null);
     };
     window.addEventListener("auth:maybe-changed", handler);
 
@@ -89,29 +110,62 @@ export function Header({
               )}
             </Link>
             {loggedIn ? (
-              <div className="flex items-center gap-2">
-                <form
-                  onSubmit={async (e) => {
-                    e.preventDefault();
-                    const { getBrowserClient } = await import(
-                      "@/lib/supabase/browser"
-                    );
-                    const supabase = getBrowserClient();
-                    await supabase.auth.signOut();
-                    window.location.href = "/";
-                  }}
-                >
-                  <Button type="submit" variant="outline">
-                    Log out
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span>My Account</span>
                   </Button>
-                </form>
-                <Button
-                  className="bg-sage-green hover:bg-sage-green-600"
-                  asChild
-                >
-                  <Link href="/account">Account</Link>
-                </Button>
-              </div>
+                </PopoverTrigger>
+                <PopoverContent className="w-[360px] p-0">
+                  <div className="p-4 border-b">
+                    <p className="text-sm text-gray-500">Welcome</p>
+                    <p className="text-base font-semibold truncate">
+                      {userEmail ?? "User"}
+                    </p>
+                  </div>
+                  <div className="p-2">
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <User className="h-4 w-4" /> My Account
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <Package className="h-4 w-4" /> Orders
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <RefreshCw className="h-4 w-4" /> Autoship & Save
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <ListIcon className="h-4 w-4" /> My Lists
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <BadgeDollarSign className="h-4 w-4" /> Rewards Credit
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <Star className="h-4 w-4" /> My Reviews
+                    </button>
+                    <button className="w-full flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50">
+                      <MessageSquare className="h-4 w-4" /> Messages
+                    </button>
+                  </div>
+                  <div className="p-4 border-t flex justify-end">
+                    <form
+                      onSubmit={async (e) => {
+                        e.preventDefault();
+                        const { getBrowserClient } = await import(
+                          "@/lib/supabase/browser"
+                        );
+                        const supabase = getBrowserClient();
+                        await supabase.auth.signOut();
+                        window.location.href = "/";
+                      }}
+                    >
+                      <Button type="submit" className="flex items-center gap-2">
+                        <LogOut className="h-4 w-4" /> Sign out
+                      </Button>
+                    </form>
+                  </div>
+                </PopoverContent>
+              </Popover>
             ) : (
               <>
                 <Button variant="outline" asChild>

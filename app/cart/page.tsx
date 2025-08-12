@@ -3,11 +3,19 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useEffect, useMemo } from "react";
 import { useCart } from "../context/cart-context";
 import { Minus, Plus, Trash2 } from "lucide-react";
 
 export default function ShoppingCart() {
-  const { items, removeFromCart, updateQuantity, getTotalPrice } = useCart();
+  const {
+    items,
+    removeFromCart,
+    updateQuantity,
+    updateBillingType,
+    getTotalPrice,
+  } = useCart();
 
   const subtotal = getTotalPrice();
   const shipping = 0; // Free shipping
@@ -56,9 +64,33 @@ export default function ShoppingCart() {
 
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold">{item.name}</h3>
-                  <p className="text-sage-green font-bold">
-                    ${item.price.toFixed(2)}
-                  </p>
+                  <div className="text-sm text-gray-600 mt-1">
+                    <RadioGroup
+                      className="flex gap-4"
+                      value={item.billingType}
+                      onValueChange={(v) =>
+                        updateBillingType(item.id, v as any)
+                      }
+                    >
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <RadioGroupItem
+                          value="one-time"
+                          id={`one-${item.id}`}
+                        />
+                        <span>One-time • ${item.price.toFixed(2)}</span>
+                      </label>
+                      <label className="inline-flex items-center gap-2 cursor-pointer">
+                        <RadioGroupItem
+                          value="subscribe"
+                          id={`sub-${item.id}`}
+                        />
+                        <span>
+                          Subscribe (10% off) • $
+                          {(Math.round(item.price * 90) / 100).toFixed(2)}
+                        </span>
+                      </label>
+                    </RadioGroup>
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-3">

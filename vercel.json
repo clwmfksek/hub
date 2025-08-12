@@ -1,0 +1,17 @@
+{
+  "rewrites": [
+    {
+      "source": "/auth/:path*",
+      "destination": "https://iarequheuudlmajvwtrt.supabase.co/auth/:path*"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/auth/:path*",
+      "headers": [
+        { "key": "X-Forwarded-Proto", "value": "https" },
+        { "key": "X-Forwarded-Host", "value": "www.regimenhub.com" }
+      ]
+    }
+  ]
+}

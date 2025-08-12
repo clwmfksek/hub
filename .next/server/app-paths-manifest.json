@@ -1,6 +1,7 @@
 {
   "/influencers/page": "app/influencers/page.js",
-  "/influencers/[name]/page": "app/influencers/[name]/page.js",
+  "/cart/page": "app/cart/page.js",
   "/stacks/page": "app/stacks/page.js",
+  "/purchase/checkout/page": "app/purchase/checkout/page.js",
   "/page": "app/page.js"
 }

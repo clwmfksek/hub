@@ -4,6 +4,13 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
 import { useCart } from "../context/cart-context";
 import { useSearchParams } from "next/navigation";
 import { categories, stacks, categorySlugToName } from "./data";
@@ -11,6 +18,8 @@ import { categories, stacks, categorySlugToName } from "./data";
 export default function StackLibrary() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [lastAddedName, setLastAddedName] = useState<string | null>(null);
   const { addToCart } = useCart();
   const searchParams = useSearchParams();
 
@@ -28,15 +37,17 @@ export default function StackLibrary() {
       : stacks.filter((s) => s.category === activeFilter);
 
   const handleAdd = (s: (typeof stacks)[0]) => {
-    addToCart({ id: s.id, name: s.name, price: s.price, image: s.image });
+    // add as one-time by default
+    addToCart({
+      id: s.id,
+      name: s.name,
+      price: s.price,
+      image: s.image,
+      billingType: "one-time" as any,
+    });
     setAddedItems((prev) => new Set(prev).add(s.id));
-    setTimeout(() => {
-      setAddedItems((prev) => {
-        const next = new Set(prev);
-        next.delete(s.id);
-        return next;
-      });
-    }, 2000);
+    setLastAddedName(s.name);
+    setConfirmOpen(true);
   };
 
   return (
@@ -131,6 +142,27 @@ export default function StackLibrary() {
             );
           })}
         </div>
+
+        <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Added to cart!</DialogTitle>
+            </DialogHeader>
+            <p className="text-sm text-gray-600 mb-4">
+              {lastAddedName
+                ? `${lastAddedName} has been added to your cart.`
+                : "Item has been added to your cart."}
+            </p>
+            <DialogFooter>
+              <Button variant="outline" onClick={() => setConfirmOpen(false)}>
+                Continue Shopping
+              </Button>
+              <Button className="bg-sage-green hover:bg-sage-green-600" asChild>
+                <Link href="/cart">View Cart</Link>
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
