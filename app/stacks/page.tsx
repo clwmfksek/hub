@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import StackCard from "../components/StackCard";
 import {
   Dialog,
   DialogContent,
@@ -98,84 +99,9 @@ export default function StackLibrary() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {filtered.map((s) => {
-            const isAdded = addedItems.has(s.id);
-            const theme = categories.find((c) => c.name === s.category);
-            return (
-              <div
-                key={s.id}
-                className="bg-white rounded-2xl shadow-lg p-6 flex flex-col md:flex-row items-start gap-6 transition-transform hover:-translate-y-2 border border-gray-100"
-              >
-                <div className="flex-shrink-0">
-                  <Image
-                    src={s.image || "/placeholder.svg"}
-                    alt={s.name}
-                    width={150}
-                    height={150}
-                    className="rounded-lg object-cover aspect-square"
-                  />
-                </div>
-                <div className="flex-1 w-full">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span
-                      className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${
-                        theme?.color
-                      } text-gray-800 border border-stone-200/70 ring-1 ring-stone-200/60 shadow-sm transition-colors duration-200 ${
-                        theme?.hoverBg ??
-                        "hover:ring-stone-300 hover:shadow-md hover:brightness-95 hover:saturate-125"
-                      } active:scale-[0.99]`}
-                    >
-                      {s.category}
-                    </span>
-                  </div>
-                  {(() => {
-                    const { displayName, owner } = parseOwner(s.name);
-                    return (
-                      <>
-                        <h2 className="text-2xl font-bold mb-1 text-gray-800">
-                          {displayName}
-                        </h2>
-                        {owner && (
-                          <div className="text-xs text-gray-500 mb-2">
-                            by {owner}
-                          </div>
-                        )}
-                      </>
-                    );
-                  })()}
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed">
-                    {s.description}
-                  </p>
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {s.ingredients.map((ing) => (
-                      <span
-                        key={ing}
-                        className="text-xs bg-gray-100 px-3 py-1 rounded-full text-gray-700 border"
-                      >
-                        {ing}
-                      </span>
-                    ))}
-                  </div>
-                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <p className="text-3xl font-bold text-sage-green">
-                      ${s.price}
-                    </p>
-                    <Button
-                      className={`w-full sm:w-auto px-6 py-2 transition-all duration-300 ${
-                        isAdded
-                          ? "bg-green-500 hover:bg-green-600"
-                          : "bg-sage-green hover:bg-sage-green-600"
-                      }`}
-                      onClick={() => handleAdd(s)}
-                      disabled={isAdded}
-                    >
-                      {isAdded ? "Added ✓" : "Add to Cart"}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+          {filtered.map((s) => (
+            <StackCard key={s.id} stack={s} source="stacks" />
+          ))}
         </div>
 
         <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>

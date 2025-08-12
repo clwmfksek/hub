@@ -6,30 +6,30 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/stacks/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/stacks/page.js"
-    ],
     "/influencers/not-found": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/influencers/not-found.js"
     ],
-    "/influencers/page": [
+    "/influencers/[name]/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/influencers/page.js"
+      "static/chunks/app/influencers/[name]/page.js"
     ],
     "/api/supplement-cats/route": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
       "static/chunks/app/api/supplement-cats/route.js"
     ],
-    "/influencers/[name]/page": [
+    "/stacks/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/influencers/[name]/page.js"
+      "static/chunks/app/stacks/page.js"
+    ],
+    "/page": [
+      "static/chunks/webpack.js",
+      "static/chunks/main-app.js",
+      "static/chunks/app/page.js"
     ]
   }
 }

@@ -145,6 +145,23 @@ function MissingCategoryRecommendations({
   // eslint-disable-next-line @typescript-eslint/no-var-requires
   const { stacks } = require("../stacks/data") as { stacks: StackLite[] };
 
+  function parseOwner(name: string): { displayName: string; owner?: string } {
+    const pairs: Array<[string, string]> = [
+      ["Sinclair ", "Dr. David Sinclair"],
+      ["Huberman ", "Dr. Andrew Huberman"],
+      ["Hyman ", "Dr. Mark Hyman"],
+      ["Brecka ", "Gary Brecka"],
+      ["Verdin ", "Dr. Eric Verdin"],
+      ["Blueprint ", "Bryan Johnson (Blueprint)"],
+    ];
+    for (const [prefix, owner] of pairs) {
+      if (name.startsWith(prefix)) {
+        return { displayName: name.slice(prefix.length), owner };
+      }
+    }
+    return { displayName: name };
+  }
+
   const wanted = Array.from(
     new Set(
       missingCategories
@@ -169,35 +186,43 @@ function MissingCategoryRecommendations({
         Recommended to complete your routine
       </div>
       <div className="space-y-2">
-        {picks.slice(0, 3).map((s) => (
-          <div
-            key={s.id}
-            className="flex items-center gap-3 p-2 border rounded-lg"
-          >
-            <div className="relative w-12 h-12 overflow-hidden rounded-md bg-gray-50">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={s.image || "/placeholder.svg"}
-                alt={s.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="flex-1">
-              <div className="text-sm font-medium text-gray-900">{s.name}</div>
-              <div className="text-xs text-gray-500">{s.category}</div>
-            </div>
-            <div className="text-sm font-semibold text-sage-green mr-2">
-              ${s.price}
-            </div>
-            <Button
-              size="sm"
-              className="bg-sage-green hover:bg-sage-green-600"
-              onClick={() => onQuickAdd(s)}
+        {picks.slice(0, 3).map((s) => {
+          const { displayName, owner } = parseOwner(s.name);
+          return (
+            <div
+              key={s.id}
+              className="flex items-center gap-3 p-2 border rounded-lg"
             >
-              Quick add
-            </Button>
-          </div>
-        ))}
+              <div className="relative w-12 h-12 overflow-hidden rounded-md bg-gray-50">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={s.image || "/placeholder.svg"}
+                  alt={displayName}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="flex-1">
+                <div className="text-sm font-medium text-gray-900">
+                  {displayName}
+                </div>
+                <div className="text-[11px] text-gray-500">
+                  {owner ? <>by {owner} · </> : null}
+                  {s.category}
+                </div>
+              </div>
+              <div className="text-sm font-semibold text-sage-green mr-2">
+                ${s.price}
+              </div>
+              <Button
+                size="sm"
+                className="bg-sage-green hover:bg-sage-green-600"
+                onClick={() => onQuickAdd(s)}
+              >
+                Quick add
+              </Button>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

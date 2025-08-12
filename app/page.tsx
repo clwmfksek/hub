@@ -11,7 +11,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { stacks } from "./stacks/data";
 import { Progress } from "@/components/ui/progress";
-import AddToCartWithConfirm from "./components/AddToCartWithConfirm";
+import StackCard from "./components/StackCard";
 import { influencers as directoryInfluencers } from "./influencers/data";
 import {
   AnimatedText,
@@ -233,64 +233,7 @@ export default function LandingPage() {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {stacks.slice(0, 6).map((s) => (
-              <div
-                key={s.id}
-                className="group bg-white rounded-2xl shadow-lg border border-stone-200/60 overflow-hidden hover:-translate-y-1 transition-transform"
-              >
-                <Link href={`/stacks/${s.id}`} className="block">
-                  <div className="relative h-48 w-full overflow-hidden">
-                    <Image
-                      src={s.image || "/placeholder.svg"}
-                      alt={s.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                </Link>
-                <div className="p-6">
-                  <span className="inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-100 text-gray-800 border mb-3">
-                    {s.category}
-                  </span>
-                  <Link href={`/stacks/${s.id}`} className="block">
-                    <h3 className="text-xl font-semibold mb-2">{s.name}</h3>
-                    <p className="text-gray-600 text-sm line-clamp-2">
-                      {s.description}
-                    </p>
-                  </Link>
-
-                  {s.breakdown && s.breakdown.length > 0 && (
-                    <div className="mt-4 space-y-3">
-                      {s.breakdown.slice(0, 2).map((b) => (
-                        <div key={b.name}>
-                          <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
-                            <span className="font-medium text-gray-800">
-                              {b.name}
-                            </span>
-                            <span>
-                              {[b.dose, b.timing].filter(Boolean).join(" • ")}
-                            </span>
-                          </div>
-                          <Progress value={b.evidencePct ?? 0} />
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  <div className="mt-5 flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-sage-green font-bold text-lg">
-                        ${s.price}
-                      </span>
-                    </div>
-                    <AddToCartWithConfirm
-                      id={s.id}
-                      name={s.name}
-                      price={s.price}
-                      image={s.image}
-                    />
-                  </div>
-                </div>
-              </div>
+              <StackCard key={s.id} stack={s} source="home" />
             ))}
           </div>
         </div>

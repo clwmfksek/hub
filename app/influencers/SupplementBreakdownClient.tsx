@@ -30,26 +30,20 @@ export default function SupplementBreakdownClient({
   return (
     <section className="mt-12">
       <h2 className="text-2xl font-semibold mb-4">{title}</h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
         {supplements.map((sup) => {
-          const primary = catMap[sup]?.primary;
           const cats = catMap[sup]?.categories ?? [];
           return (
             <div
               key={sup}
-              className="flex items-start justify-between rounded-xl border bg-white p-4"
+              className="flex items-center justify-between rounded-xl border bg-white px-4 py-3 transition-colors hover:bg-gray-50"
             >
-              <div className="text-sm font-medium text-gray-900">{sup}</div>
-              <div className="flex items-center gap-2 flex-wrap justify-end">
-                {primary ? (
-                  <span className="text-xs px-2.5 py-1 rounded-full border bg-gray-50 text-gray-700">
-                    {primary}
-                  </span>
-                ) : null}
-                {cats.slice(1).map((c) => (
+              <span className="text-sm font-medium text-gray-900">{sup}</span>
+              <div className="flex items-center gap-1 flex-wrap justify-end">
+                {cats.map((c) => (
                   <span
                     key={c}
-                    className="text-[11px] px-2 py-0.5 rounded-full border bg-white text-gray-500"
+                    className="text-[11px] px-2 py-0.5 rounded-full border bg-gray-100 text-gray-600"
                   >
                     {c}
                   </span>

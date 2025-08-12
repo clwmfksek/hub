@@ -18,7 +18,14 @@ export const influencers: Influencer[] = [
     name: "Bryan Johnson",
     specialty: "Longevity pioneer (Blueprint)",
     image: "/people/bryan.jpg",
-    stacks: ["Energy Prime", "NMN Pro", "SleepWell"],
+    stacks: [
+      "Blueprint Core",
+      "Blueprint Cardio",
+      "Blueprint Gut",
+      "Blueprint Performance",
+      "Blueprint Anti-inflammatory",
+      "Blueprint Vision",
+    ],
     supplements: [
       "Collagen Protein",
       "Creatine",
@@ -53,7 +60,12 @@ export const influencers: Influencer[] = [
     name: "David Sinclair",
     specialty: "Harvard professor & longevity researcher",
     image: "/people/david.jpg",
-    stacks: ["NMN Pro", "Vitality", "Immune Shield+"],
+    stacks: [
+      "Sinclair Longevity Core",
+      "Sinclair NAD+ & Autophagy",
+      "Sinclair Polyphenols",
+      "Sinclair Cardio & Metabolic",
+    ],
     supplements: [
       "NMN",
       "Resveratrol",
@@ -83,7 +95,12 @@ export const influencers: Influencer[] = [
     name: "Andrew Huberman",
     specialty: "Neuroscientist & Stanford professor",
     image: "/people/andrew.jpg",
-    stacks: ["Deep Sleep Max", "Focus Elite", "Energy Prime"],
+    stacks: [
+      "Huberman Sleep Stack",
+      "Huberman Hormone Support",
+      "Huberman Focus & Stress",
+      "Huberman Performance",
+    ],
     supplements: [
       "Magnesium Threonate",
       "Apigenin",
@@ -122,7 +139,12 @@ export const influencers: Influencer[] = [
     name: "Mark Hyman",
     specialty: "Functional medicine pioneer",
     image: "/people/mark.jpg",
-    stacks: ["Immune Shield+", "Glow Collagen+", "SleepWell"],
+    stacks: [
+      "Hyman Foundational Wellness",
+      "Hyman Metabolic Balance",
+      "Hyman Detox Support",
+      "Hyman Gut Health",
+    ],
     supplements: [
       "Multivitamin",
       "Omega-3",
@@ -157,7 +179,12 @@ export const influencers: Influencer[] = [
     name: "Gary Brecka",
     specialty: "Human biologist (The Ultimate Human)",
     image: "/people/Gary-Brecka.jpg",
-    stacks: ["Vitality", "Immune Shield+", "Energy Prime"],
+    stacks: [
+      "Brecka Methylation",
+      "Brecka Antioxidant",
+      "Brecka Performance",
+      "Brecka Gut & Immune",
+    ],
     supplements: [
       "Methylated B-Complex",
       "Vitamin D3 + K2",
@@ -195,7 +222,12 @@ export const influencers: Influencer[] = [
     name: "Eric Verdin",
     specialty: "CEO, Buck Institute",
     image: "/people/Eric.verdin.jpg",
-    stacks: ["Immune Shield+", "Energy Prime"],
+    stacks: [
+      "Verdin Longevity Basics",
+      "Verdin Mito Performance",
+      "Verdin Antioxidant",
+      "Verdin Gut Support",
+    ],
     supplements: [
       "Vitamin D3",
       "Vitamin B12",

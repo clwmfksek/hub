@@ -4,7 +4,8 @@ import Link from "next/link";
 import { influencers } from "../data";
 import { Button } from "@/components/ui/button";
 import { Instagram, Twitter } from "lucide-react";
-import StackChip from "../StackChip";
+import StackCard from "../../components/StackCard";
+import { stacks } from "../../stacks/data";
 import { getServerClient } from "@/lib/supabase/server";
 import SupplementBreakdownClient from "../SupplementBreakdownClient";
 
@@ -71,46 +72,37 @@ export default async function InfluencerProfile({ params }: Props) {
                 )}
               </div>
             )}
-            <div className="mt-4">
-              <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
-                Top Stacks
-              </h3>
-              <div className="flex flex-wrap gap-2">
-                {profile.stacks.length === 0 ? (
-                  <span className="text-gray-400 text-sm">Coming soon</span>
-                ) : (
-                  profile.stacks.map((s) => <StackChip key={s} name={s} />)
-                )}
-              </div>
-            </div>
+            {/* Top Stacks section removed as requested */}
           </div>
         </div>
 
-        {/* Supplement Breakdown (full list) */}
-        {profile.supplements && profile.supplements.length > 0 && (
-          <SupplementBreakdownClient supplements={profile.supplements} />
-        )}
-
-        {/* Stacks details */}
-        <section className="mt-12 bg-sage-green-50 rounded-2xl p-8">
+        {/* Currently taking stacks - moved up and styled as cards */}
+        <section className="mt-12">
           <h2 className="text-2xl font-semibold mb-4">
             Currently taking stacks
           </h2>
           {profile.stacks.length === 0 ? (
             <p className="text-gray-500">No stacks have been added yet.</p>
           ) : (
-            <ul className="list-disc pl-6 space-y-2">
-              {profile.stacks.map((s) => (
-                <li key={s} className="flex items-center gap-3">
-                  <StackChip name={s} className="underline text-left" />
-                  <p className="text-gray-600 text-sm">
-                    Add detailed description here.
-                  </p>
-                </li>
-              ))}
-            </ul>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {profile.stacks.slice(0, 6).map((n) => {
+                const st = stacks.find(
+                  (x) =>
+                    x.name.toLowerCase() === n.toLowerCase() ||
+                    x.id.toLowerCase() === n.toLowerCase()
+                );
+                return st ? (
+                  <StackCard key={st.id} stack={st} source="influencers" />
+                ) : null;
+              })}
+            </div>
           )}
         </section>
+
+        {/* Supplement Breakdown (full list) - moved below and simplified */}
+        {profile.supplements && profile.supplements.length > 0 && (
+          <SupplementBreakdownClient supplements={profile.supplements} />
+        )}
 
         {/* Back to list */}
         <div className="mt-12 flex justify-end">

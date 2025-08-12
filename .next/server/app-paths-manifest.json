@@ -1,6 +1,6 @@
 {
   "/api/supplement-cats/route": "app/api/supplement-cats/route.js",
-  "/influencers/page": "app/influencers/page.js",
+  "/page": "app/page.js",
   "/influencers/[name]/page": "app/influencers/[name]/page.js",
   "/stacks/page": "app/stacks/page.js"
 }
