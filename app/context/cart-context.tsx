@@ -15,6 +15,7 @@ interface CartItem {
   image: string;
   quantity: number;
   billingType: "one-time" | "subscribe";
+  source?: "stacks" | "influencers" | "home";
 }
 
 interface CartContextType {

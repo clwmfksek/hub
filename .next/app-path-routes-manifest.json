@@ -1,0 +1,22 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/(auth)/callback/route": "/callback",
+  "/api/supplement-cats/route": "/api/supplement-cats",
+  "/api/waitlist/route": "/api/waitlist",
+  "/auth/callback/route": "/auth/callback",
+  "/(auth)/forgot-password/page": "/forgot-password",
+  "/(auth)/signup/page": "/signup",
+  "/account/page": "/account",
+  "/auth/reset-password/page": "/auth/reset-password",
+  "/cart/page": "/cart",
+  "/page": "/",
+  "/influencers/page": "/influencers",
+  "/purchase/checkout/page": "/purchase/checkout",
+  "/purchase/page": "/purchase",
+  "/purchase/success/page": "/purchase/success",
+  "/stacks/page": "/stacks",
+  "/waitlist/page": "/waitlist",
+  "/(auth)/login/page": "/login",
+  "/stacks/[id]/page": "/stacks/[id]",
+  "/influencers/[name]/page": "/influencers/[name]"
+}

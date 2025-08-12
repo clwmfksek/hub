@@ -5,6 +5,8 @@ import { influencers } from "../data";
 import { Button } from "@/components/ui/button";
 import { Instagram, Twitter } from "lucide-react";
 import StackChip from "../StackChip";
+import { getServerClient } from "@/lib/supabase/server";
+import SupplementBreakdownClient from "../SupplementBreakdownClient";
 
 type Props = { params: Promise<{ name: string }> };
 
@@ -20,6 +22,8 @@ export default async function InfluencerProfile({ params }: Props) {
   );
 
   if (!profile) return notFound();
+
+  // Client component will fetch and render supplement categories
 
   return (
     <div className="pt-24">
@@ -38,6 +42,11 @@ export default async function InfluencerProfile({ params }: Props) {
             <p className="text-sage-green font-medium mt-1">
               {profile.specialty}
             </p>
+            {profile.bio && (
+              <p className="text-gray-700 mt-3 leading-relaxed">
+                {profile.bio}
+              </p>
+            )}
             {profile.sns && (
               <div className="flex items-center gap-4 mt-3">
                 {profile.sns.instagram && (
@@ -76,6 +85,11 @@ export default async function InfluencerProfile({ params }: Props) {
             </div>
           </div>
         </div>
+
+        {/* Supplement Breakdown (full list) */}
+        {profile.supplements && profile.supplements.length > 0 && (
+          <SupplementBreakdownClient supplements={profile.supplements} />
+        )}
 
         {/* Stacks details */}
         <section className="mt-12 bg-sage-green-50 rounded-2xl p-8">

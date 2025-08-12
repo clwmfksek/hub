@@ -9,6 +9,9 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { stacks } from "./stacks/data";
+import { Progress } from "@/components/ui/progress";
+import AddToCartWithConfirm from "./components/AddToCartWithConfirm";
 import { influencers as directoryInfluencers } from "./influencers/data";
 import {
   AnimatedText,
@@ -215,75 +218,86 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* Your Path to Wellness Section */}
+      {/* Featured Stacks Preview */}
       <section className="w-full py-16 md:py-24 bg-white">
-        <div className="container px-4 md:px-6 text-center">
-          <h2 className="text-3xl font-bold mb-12">Your Path to Wellness</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
-            <div className="flex flex-col items-center">
-              <div className="bg-white p-4 rounded-full shadow-md mb-4">
-                <Target className="h-8 w-8 text-sage-green" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">Choose Your Goal</h3>
-              <p className="text-gray-600">
-                Start by selecting a health regimen that aligns with your
-                wellness aspirations.
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="bg-white p-4 rounded-full shadow-md mb-4">
-                <Users className="h-8 w-8 text-sage-green" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                Choose Your Favorite Influencers
-              </h3>
-              <p className="text-gray-600">
-                Discover stacks curated and recommended by experts and
-                influencers you trust.
-              </p>
-            </div>
-            <div className="flex flex-col items-center">
-              <div className="bg-white p-4 rounded-full shadow-md mb-4">
-                <ShoppingCart className="h-8 w-8 text-sage-green" />
-              </div>
-              <h3 className="text-xl font-semibold mb-2">
-                One-click Buy Stack
-              </h3>
-              <p className="text-gray-600">
-                Add your chosen stacks to the cart and check out with a simple,
-                seamless process.
-              </p>
-            </div>
+        <div className="container px-4 md:px-6">
+          <div className="flex items-center justify-between mb-8">
+            <h2 className="text-3xl font-bold">Featured Stacks</h2>
+            <Link
+              href="/stacks"
+              className="inline-flex items-center gap-2 text-sage-green hover:text-sage-green-700"
+            >
+              Browse all
+              <ArrowRight className="h-5 w-5" />
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* Testimonials Section */}
-      <section className="w-full py-16 md:py-24 bg-sandy-beige">
-        <div className="container px-4 md:px-6 text-center">
-          <h2 className="text-3xl font-bold mb-12">Loved by Our Community</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {stacks.slice(0, 6).map((s) => (
               <div
-                key={testimonial.name}
-                className="bg-white p-8 rounded-2xl shadow-lg"
+                key={s.id}
+                className="group bg-white rounded-2xl shadow-lg border border-stone-200/60 overflow-hidden hover:-translate-y-1 transition-transform"
               >
-                <div className="flex justify-center mb-4">
-                  {[...Array(testimonial.rating)].map((_, i) => (
-                    <Star key={i} className="text-yellow-400 fill-yellow-400" />
-                  ))}
+                <Link href={`/stacks/${s.id}`} className="block">
+                  <div className="relative h-48 w-full overflow-hidden">
+                    <Image
+                      src={s.image || "/placeholder.svg"}
+                      alt={s.name}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                </Link>
+                <div className="p-6">
+                  <span className="inline-block text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-100 text-gray-800 border mb-3">
+                    {s.category}
+                  </span>
+                  <Link href={`/stacks/${s.id}`} className="block">
+                    <h3 className="text-xl font-semibold mb-2">{s.name}</h3>
+                    <p className="text-gray-600 text-sm line-clamp-2">
+                      {s.description}
+                    </p>
+                  </Link>
+
+                  {s.breakdown && s.breakdown.length > 0 && (
+                    <div className="mt-4 space-y-3">
+                      {s.breakdown.slice(0, 2).map((b) => (
+                        <div key={b.name}>
+                          <div className="flex items-center justify-between text-xs text-gray-600 mb-1">
+                            <span className="font-medium text-gray-800">
+                              {b.name}
+                            </span>
+                            <span>
+                              {[b.dose, b.timing].filter(Boolean).join(" • ")}
+                            </span>
+                          </div>
+                          <Progress value={b.evidencePct ?? 0} />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div className="mt-5 flex items-center justify-between">
+                    <div className="flex items-baseline gap-2">
+                      <span className="text-sage-green font-bold text-lg">
+                        ${s.price}
+                      </span>
+                    </div>
+                    <AddToCartWithConfirm
+                      id={s.id}
+                      name={s.name}
+                      price={s.price}
+                      image={s.image}
+                    />
+                  </div>
                 </div>
-                <blockquote className="text-gray-600 italic mb-4">
-                  "{testimonial.quote}"
-                </blockquote>
-                <p className="font-semibold text-gray-800">
-                  {testimonial.name}
-                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Spacer below preview */}
+      <section className="w-full py-4 bg-sandy-beige" />
 
       {/* Select Influencers Section */}
       <section className="w-full py-16 md:py-24 bg-sandy-beige">

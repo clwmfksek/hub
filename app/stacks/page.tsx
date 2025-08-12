@@ -44,6 +44,7 @@ export default function StackLibrary() {
       price: s.price,
       image: s.image,
       billingType: "one-time" as any,
+      source: "stacks",
     });
     setAddedItems((prev) => new Set(prev).add(s.id));
     setLastAddedName(s.name);

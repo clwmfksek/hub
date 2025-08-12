@@ -12,6 +12,13 @@ export type StackItem = {
   ingredients: string[];
   description: string;
   price: number;
+  benefits?: string[];
+  breakdown?: {
+    name: string;
+    dose?: string;
+    timing?: string;
+    evidencePct?: number;
+  }[];
 };
 
 export const categories: Category[] = [
@@ -46,6 +53,12 @@ const baseStacks: StackItem[] = [
     ingredients: ["Melatonin", "L-Theanine", "Magnesium"],
     description: "Drift into a deep, restorative sleep and wake up refreshed.",
     price: 29.99,
+    benefits: ["Deep sleep", "Circadian support", "Morning refresh"],
+    breakdown: [
+      { name: "Melatonin", dose: "1mg", timing: "Evening", evidencePct: 92 },
+      { name: "L-Theanine", dose: "200mg", timing: "Evening", evidencePct: 88 },
+      { name: "Magnesium", dose: "200mg", timing: "Evening", evidencePct: 85 },
+    ],
   },
   {
     id: "mindsharp",
@@ -56,6 +69,22 @@ const baseStacks: StackItem[] = [
     description:
       "Enhance cognitive function and mental clarity for peak performance.",
     price: 34.99,
+    benefits: ["Memory", "Focus", "Neuroprotection"],
+    breakdown: [
+      {
+        name: "Ginkgo Biloba",
+        dose: "120mg",
+        timing: "Morning",
+        evidencePct: 86,
+      },
+      { name: "Bacopa", dose: "300mg", timing: "Morning", evidencePct: 83 },
+      {
+        name: "Lion's Mane",
+        dose: "500mg",
+        timing: "Morning",
+        evidencePct: 80,
+      },
+    ],
   },
   {
     id: "vitality",
@@ -65,6 +94,17 @@ const baseStacks: StackItem[] = [
     ingredients: ["Resveratrol", "NMN", "CoQ10"],
     description: "Support cellular health and promote longevity from within.",
     price: 45.99,
+    benefits: ["Healthy aging", "Metabolism", "Mitochondria"],
+    breakdown: [
+      {
+        name: "Resveratrol",
+        dose: "250mg",
+        timing: "Morning",
+        evidencePct: 84,
+      },
+      { name: "NMN", dose: "500mg", timing: "Morning", evidencePct: 89 },
+      { name: "CoQ10", dose: "100mg", timing: "With meals", evidencePct: 82 },
+    ],
   },
   {
     id: "radiance",
@@ -75,6 +115,17 @@ const baseStacks: StackItem[] = [
     description:
       "Nourish your skin, hair, and nails for a natural, healthy glow.",
     price: 39.99,
+    benefits: ["Skin glow", "Hydration", "Hair & nails"],
+    breakdown: [
+      { name: "Collagen", dose: "5g", timing: "Morning", evidencePct: 87 },
+      {
+        name: "Hyaluronic Acid",
+        dose: "120mg",
+        timing: "Anytime",
+        evidencePct: 78,
+      },
+      { name: "Biotin", dose: "5mg", timing: "Anytime", evidencePct: 74 },
+    ],
   },
   {
     id: "energyboost",
@@ -85,6 +136,22 @@ const baseStacks: StackItem[] = [
     description:
       "Sustain your energy levels throughout the day without the crash.",
     price: 24.99,
+    benefits: ["All-day energy", "ATP support", "Stress resilience"],
+    breakdown: [
+      { name: "Cordyceps", dose: "1000mg", timing: "Morning", evidencePct: 79 },
+      {
+        name: "B‑Complex",
+        dose: "B-Complex",
+        timing: "Morning",
+        evidencePct: 72,
+      },
+      {
+        name: "Panax Ginseng",
+        dose: "200mg",
+        timing: "Morning",
+        evidencePct: 76,
+      },
+    ],
   },
   {
     id: "immunityguard",
@@ -95,9 +162,13 @@ const baseStacks: StackItem[] = [
     description:
       "Strengthen your body's natural defenses to stay well year-round.",
     price: 31.99,
+    benefits: ["Immune", "Antioxidants", "Recovery"],
+    breakdown: [
+      { name: "Vitamin C", dose: "1000mg", timing: "Anytime", evidencePct: 85 },
+      { name: "Zinc", dose: "15mg", timing: "With meals", evidencePct: 77 },
+      { name: "Elderberry", dose: "500mg", timing: "Anytime", evidencePct: 73 },
+    ],
   },
 ];
 
-import { extraStacks } from "./extra";
-
-export const stacks: StackItem[] = [...baseStacks, ...extraStacks];
+export const stacks: StackItem[] = baseStacks;

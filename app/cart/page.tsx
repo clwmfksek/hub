@@ -149,10 +149,57 @@ export default function ShoppingCart() {
               </div>
 
               <Button
-                asChild
                 className="w-full bg-sage-green hover:bg-sage-green-600 text-base py-3 rounded-lg"
+                onClick={async () => {
+                  try {
+                    const fromRoute = items.reduce(
+                      (acc: Record<string, number>, it) => {
+                        const key = it.source || "unknown";
+                        acc[key] = (acc[key] || 0) + 1;
+                        return acc;
+                      },
+                      {} as Record<string, number>
+                    );
+                    const billingSummary = items.reduce(
+                      (acc: Record<string, number>, it) => {
+                        acc[it.billingType] = (acc[it.billingType] || 0) + 1;
+                        return acc;
+                      },
+                      {} as Record<string, number>
+                    );
+                    await fetch("/api/waitlist", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        items: items.map(
+                          ({
+                            id,
+                            name,
+                            price,
+                            image,
+                            quantity,
+                            billingType,
+                            source,
+                          }) => ({
+                            id,
+                            name,
+                            price,
+                            image,
+                            quantity,
+                            billingType,
+                            source,
+                          })
+                        ),
+                        fromRoute,
+                        billingSummary,
+                        total,
+                      }),
+                    });
+                  } catch {}
+                  window.location.href = "/waitlist";
+                }}
               >
-                <Link href="/purchase">Process to purchase</Link>
+                Join waitlist
               </Button>
             </div>
           </div>
