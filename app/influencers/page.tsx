@@ -15,11 +15,12 @@ import { Button } from "@/components/ui/button";
 import StackChip from "./StackChip";
 import { influencers } from "./data";
 
-// 데이터는 './data'에서 관리됩니다
+// Data is managed in './data'
 
 export default function InfluencerDirectory() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("All");
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
 
   const filteredInfluencers = influencers.filter(
     (inf) =>
@@ -95,6 +96,30 @@ export default function InfluencerDirectory() {
                   <p className="text-sage-green font-medium">
                     {influencer.specialty}
                   </p>
+                  {influencer.bio && (
+                    <div>
+                      <p
+                        className={`text-sm text-gray-600 mt-2 ${
+                          expanded[influencer.name] ? "" : "line-clamp-3"
+                        }`}
+                      >
+                        {influencer.bio}
+                      </p>
+                      <button
+                        type="button"
+                        aria-expanded={Boolean(expanded[influencer.name])}
+                        className="mt-1 text-xs text-sage-green underline hover:text-sage-green-700"
+                        onClick={() =>
+                          setExpanded((prev) => ({
+                            ...prev,
+                            [influencer.name]: !prev[influencer.name],
+                          }))
+                        }
+                      >
+                        {expanded[influencer.name] ? "Less" : "More"}
+                      </button>
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="mt-6 flex-grow">

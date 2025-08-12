@@ -21,7 +21,7 @@ export async function middleware(req: NextRequest) {
     },
   });
 
-  // 세션을 강제로 확인하여 쿠키가 최신화되도록 함
+  // Force session check so cookies stay fresh
   await supabase.auth.getSession();
   return res;
 }

@@ -41,7 +41,8 @@ export default function CheckoutPage() {
             ) : (
               <>
                 <div className="mb-4 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-800">
-                  결제 단계는 현재 준비중입니다. 주문 요약만 확인 가능합니다.
+                  The payment step is currently under preparation. You can only
+                  review the order summary.
                 </div>
                 <ul className="divide-y">
                   {items.map((it) => (
@@ -61,7 +62,7 @@ export default function CheckoutPage() {
                   </li>
                 </ul>
                 <Button className="w-full mt-6" variant="outline" disabled>
-                  결제 준비중
+                  Preparing payment
                 </Button>
               </>
             )}

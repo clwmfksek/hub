@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 
 const schema = z.object({
-  email: z.string().email("이메일 형식이 올바르지 않습니다"),
+  email: z.string().email("Invalid email format"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -27,15 +27,15 @@ export default function ForgotPasswordPage() {
     });
     if (error) {
       toast({
-        title: "전송 실패",
+        title: "Failed to send",
         description: error.message,
         variant: "destructive",
       });
       return;
     }
     toast({
-      title: "메일을 확인하세요",
-      description: "비밀번호 재설정 링크가 전송되었습니다.",
+      title: "Check your email",
+      description: "Password reset link has been sent.",
     });
   };
 

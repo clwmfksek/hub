@@ -1,4 +1,4 @@
-// 경로 정정: 이 파일은 더 이상 사용하지 않습니다. 실 경로는 /app/auth/callback/route.ts 입니다.
+// Path correction: This file is no longer used. Actual route is /app/auth/callback/route.ts
 export async function GET() {
   return new Response("Moved", {
     status: 308,

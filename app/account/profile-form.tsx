@@ -11,9 +11,9 @@ import { getBrowserClient } from "@/lib/supabase/browser";
 const schema = z.object({
   nickname: z
     .string()
-    .min(2, "닉네임은 최소 2자입니다")
-    .max(24, "닉네임은 최대 24자입니다")
-    .regex(/^[a-z0-9-]+$/i, "영문/숫자/하이픈만 허용됩니다"),
+    .min(2, "Nickname must be at least 2 characters")
+    .max(24, "Nickname must be at most 24 characters")
+    .regex(/^[a-z0-9-]+$/i, "Only letters, numbers, and hyphens are allowed"),
 });
 
 export default function ClientForm({
@@ -35,8 +35,8 @@ export default function ClientForm({
     } = await supabase.auth.getUser();
     if (userErr || !user) {
       toast({
-        title: "오류",
-        description: "로그인이 필요합니다",
+        title: "Error",
+        description: "You must be logged in",
         variant: "destructive",
       });
       return;
@@ -49,18 +49,18 @@ export default function ClientForm({
 
     if (error) {
       toast({
-        title: "저장 실패",
+        title: "Save failed",
         description: error.message,
         variant: "destructive",
       });
       return;
     }
-    toast({ title: "저장 완료", description: "닉네임이 업데이트되었습니다" });
+    toast({ title: "Saved", description: "Nickname has been updated" });
   };
 
   return (
     <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
-      <label className="text-sm font-medium">닉네임</label>
+      <label className="text-sm font-medium">Nickname</label>
       <Input {...form.register("nickname")} className="h-11" />
       {form.formState.errors.nickname && (
         <p className="text-sm text-red-600">

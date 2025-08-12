@@ -13,12 +13,12 @@ import { useEffect } from "react";
 const schema = z.object({
   password: z
     .string()
-    .min(8, "비밀번호는 8자 이상")
-    .max(40, "비밀번호는 40자 이하")
-    .regex(/[a-z]/, "소문자 포함")
-    .regex(/[A-Z]/, "대문자 포함")
-    .regex(/[0-9]/, "숫자 포함")
-    .regex(/[^a-zA-Z0-9]/, "기호 포함"),
+    .min(8, "Password must be at least 8 characters")
+    .max(40, "Password must be at most 40 characters")
+    .regex(/[a-z]/, "Must include a lowercase letter")
+    .regex(/[A-Z]/, "Must include an uppercase letter")
+    .regex(/[0-9]/, "Must include a number")
+    .regex(/[^a-zA-Z0-9]/, "Must include a symbol"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -28,7 +28,7 @@ export default function ResetPasswordPage() {
   const form = useForm<FormValues>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
-    // Supabase가 이 페이지로 리디렉션할 때 세션이 임시로 설정됨
+    // Supabase sets a temporary session when redirecting to this page
   }, []);
 
   const onSubmit = async ({ password }: FormValues) => {
@@ -36,15 +36,15 @@ export default function ResetPasswordPage() {
     const { error } = await supabase.auth.updateUser({ password });
     if (error) {
       toast({
-        title: "변경 실패",
+        title: "Update failed",
         description: error.message,
         variant: "destructive",
       });
       return;
     }
     toast({
-      title: "변경 완료",
-      description: "새 비밀번호로 로그인할 수 있습니다.",
+      title: "Updated",
+      description: "You can now log in with the new password.",
     });
   };
 

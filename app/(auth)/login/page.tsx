@@ -12,8 +12,8 @@ import { useToast } from "@/hooks/use-toast";
 import Link from "next/link";
 
 const schema = z.object({
-  email: z.string().email("이메일 형식이 올바르지 않습니다"),
-  password: z.string().min(1, "비밀번호를 입력하세요"),
+  email: z.string().email("Invalid email format"),
+  password: z.string().min(1, "Please enter your password"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -28,7 +28,7 @@ export default function LoginPage() {
     const { error } = await supabase.auth.signInWithPassword(values);
     if (error) {
       toast({
-        title: "로그인 실패",
+        title: "Login failed",
         description: error.message,
         variant: "destructive",
       });
@@ -46,7 +46,7 @@ export default function LoginPage() {
     });
     if (error) {
       toast({
-        title: "Google 로그인 실패",
+        title: "Google sign-in failed",
         description: error.message,
         variant: "destructive",
       });
@@ -78,7 +78,7 @@ export default function LoginPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Password</label>
                 <Input
-                  placeholder="비밀번호"
+                  placeholder="Password"
                   type="password"
                   {...form.register("password")}
                 />
@@ -97,7 +97,7 @@ export default function LoginPage() {
               </Button>
               <div className="mt-3 text-right">
                 <Link className="text-sm underline" href="/forgot-password">
-                  비밀번호 찾기
+                  Forgot password
                 </Link>
               </div>
             </form>
@@ -109,11 +109,11 @@ export default function LoginPage() {
             </div>
 
             <Button variant="outline" className="w-full" onClick={onGoogle}>
-              Google로 로그인
+              Continue with Google
             </Button>
 
             <p className="mt-6 text-center text-sm text-gray-600">
-              계정이 없으신가요?{" "}
+              Don't have an account?{" "}
               <Link className="underline" href="/signup">
                 Sign up
               </Link>

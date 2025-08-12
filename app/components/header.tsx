@@ -21,7 +21,7 @@ export function Header({
   useEffect(() => {
     let unsubscribe: (() => void) | undefined;
 
-    // 초기 세션 확인
+    // Initial session check
     (async () => {
       const { getBrowserClient } = await import("@/lib/supabase/browser");
       const supabase = getBrowserClient();

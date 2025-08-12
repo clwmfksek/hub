@@ -14,17 +14,17 @@ import Link from "next/link";
 const schema = z.object({
   nickname: z
     .string()
-    .min(2, "닉네임은 최소 2자입니다")
-    .max(24, "닉네임은 최대 24자입니다"),
-  email: z.string().email("이메일 형식이 올바르지 않습니다"),
+    .min(2, "Nickname must be at least 2 characters")
+    .max(24, "Nickname must be at most 24 characters"),
+  email: z.string().email("Invalid email format"),
   password: z
     .string()
-    .min(8, "비밀번호는 8자 이상")
-    .max(40, "비밀번호는 40자 이하")
-    .regex(/[a-z]/, "소문자 포함")
-    .regex(/[A-Z]/, "대문자 포함")
-    .regex(/[0-9]/, "숫자 포함")
-    .regex(/[^a-zA-Z0-9]/, "기호 포함"),
+    .min(8, "Password must be at least 8 characters")
+    .max(40, "Password must be at most 40 characters")
+    .regex(/[a-z]/, "Must include a lowercase letter")
+    .regex(/[A-Z]/, "Must include an uppercase letter")
+    .regex(/[0-9]/, "Must include a number")
+    .regex(/[^a-zA-Z0-9]/, "Must include a symbol"),
 });
 
 type FormValues = z.infer<typeof schema>;
@@ -49,7 +49,7 @@ export default function SignUpPage() {
 
     if (error) {
       toast({
-        title: "회원가입 실패",
+        title: "Sign up failed",
         description: error.message,
         variant: "destructive",
       });
@@ -57,9 +57,9 @@ export default function SignUpPage() {
     }
 
     toast({
-      title: "이메일을 확인하세요",
+      title: "Check your email",
       description:
-        "인증 링크가 전송되었습니다. 인증 완료 후 자동으로 로그인됩니다.",
+        "A verification link has been sent. You will be logged in after verification is complete.",
     });
   };
 
@@ -72,7 +72,7 @@ export default function SignUpPage() {
     });
     if (error) {
       toast({
-        title: "Google 로그인 실패",
+        title: "Google sign-in failed",
         description: error.message,
         variant: "destructive",
       });
@@ -89,8 +89,8 @@ export default function SignUpPage() {
           <CardContent className="pt-6">
             <form className="space-y-4" onSubmit={form.handleSubmit(onSubmit)}>
               <div className="space-y-2">
-                <label className="text-sm font-medium">닉네임</label>
-                <Input placeholder="닉네임" {...form.register("nickname")} />
+                <label className="text-sm font-medium">Nickname</label>
+                <Input placeholder="Nickname" {...form.register("nickname")} />
                 {form.formState.errors.nickname && (
                   <p className="text-sm text-red-600">
                     {form.formState.errors.nickname.message}
@@ -113,7 +113,7 @@ export default function SignUpPage() {
               <div className="space-y-2">
                 <label className="text-sm font-medium">Password</label>
                 <Input
-                  placeholder="비밀번호"
+                  placeholder="Password"
                   type="password"
                   {...form.register("password")}
                 />
@@ -123,11 +123,11 @@ export default function SignUpPage() {
                   </p>
                 )}
                 <ul className="text-xs text-gray-500 grid grid-cols-2 gap-x-4">
-                  <li>소문자 1개 이상</li>
-                  <li>대문자 1개 이상</li>
-                  <li>숫자 1개 이상</li>
-                  <li>기호 1개 이상</li>
-                  <li className="col-span-2">8–40자</li>
+                  <li>At least 1 lowercase</li>
+                  <li>At least 1 uppercase</li>
+                  <li>At least 1 number</li>
+                  <li>At least 1 symbol</li>
+                  <li className="col-span-2">8–40 characters</li>
                 </ul>
               </div>
 
@@ -146,11 +146,11 @@ export default function SignUpPage() {
             </div>
 
             <Button variant="outline" className="w-full" onClick={onGoogle}>
-              Google로 가입
+              Continue with Google
             </Button>
 
             <p className="mt-6 text-center text-sm text-gray-600">
-              이미 계정이 있으신가요?{" "}
+              Already have an account?{" "}
               <Link className="underline" href="/login">
                 Log in
               </Link>

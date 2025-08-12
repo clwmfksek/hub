@@ -9,6 +9,6 @@ export default async function PurchaseOptionsPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
-  // 클라이언트 상호작용이 있어 간단한 선택 상태는 클라이언트로 분리
+  // With client interactions, simple selection state is separated to the client
   return <ClientPurchase />;
 }

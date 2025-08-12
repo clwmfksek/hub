@@ -15,7 +15,7 @@ async function ensureProfile() {
   } = await supabase.auth.getUser();
   if (!user) return;
 
-  // 이미 프로필이 있으면 종료
+  // Exit if profile already exists
   const { data: existing } = await supabase
     .from("profiles")
     .select("id")
@@ -33,7 +33,7 @@ async function ensureProfile() {
     metaNickname || fullName || emailLocal || `user-${user.id.slice(0, 8)}`;
   let candidate = toSlug(base).slice(0, 24) || `user-${user.id.slice(0, 8)}`;
 
-  // 이미 존재하면 무시하도록 시도 -> 충돌 시 접미사 부여 후 최대 3회 재시도
+  // If exists, try to ignore -> on conflict, add suffix and retry up to 3 times
   for (let i = 0; i < 3; i++) {
     const { error } = await supabase
       .from("profiles")
@@ -61,7 +61,7 @@ export async function GET(req: Request) {
         await ensureProfile();
       }
     } catch {
-      // 무시하고 홈으로 이동
+      // Ignore and redirect to home
     }
   }
 

@@ -12,7 +12,7 @@ export function getBrowserClient(): SupabaseClient {
 
   if (!supabaseUrl || !supabaseKey) {
     throw new Error(
-      "Supabase 환경변수가 설정되어 있지 않습니다. NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY"
+      "Supabase environment variables are missing. NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY"
     );
   }
 

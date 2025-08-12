@@ -24,7 +24,7 @@ export default async function InfluencerProfile({ params }: Props) {
   return (
     <div className="pt-24">
       <div className="container py-12">
-        {/* 상단: 프로필 카드 확장 */}
+        {/* Profile header */}
         <div className="bg-white rounded-2xl shadow-lg p-8 flex flex-col md:flex-row gap-8">
           <Image
             src={profile.image || "/placeholder.svg"}
@@ -68,7 +68,7 @@ export default async function InfluencerProfile({ params }: Props) {
               </h3>
               <div className="flex flex-wrap gap-2">
                 {profile.stacks.length === 0 ? (
-                  <span className="text-gray-400 text-sm">준비 중</span>
+                  <span className="text-gray-400 text-sm">Coming soon</span>
                 ) : (
                   profile.stacks.map((s) => <StackChip key={s} name={s} />)
                 )}
@@ -77,20 +77,20 @@ export default async function InfluencerProfile({ params }: Props) {
           </div>
         </div>
 
-        {/* 중단: 먹고있는 stacks 상세 */}
+        {/* Stacks details */}
         <section className="mt-12 bg-sage-green-50 rounded-2xl p-8">
-          <h2 className="text-2xl font-semibold mb-4">현재 섭취 중인 Stacks</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Currently taking stacks
+          </h2>
           {profile.stacks.length === 0 ? (
-            <p className="text-gray-500">
-              작성 예정입니다. 이 인플루언서의 스택 정보를 추가해 주세요.
-            </p>
+            <p className="text-gray-500">No stacks have been added yet.</p>
           ) : (
             <ul className="list-disc pl-6 space-y-2">
               {profile.stacks.map((s) => (
                 <li key={s} className="flex items-center gap-3">
                   <StackChip name={s} className="underline text-left" />
                   <p className="text-gray-600 text-sm">
-                    상세 설명을 여기에 추가하세요.
+                    Add detailed description here.
                   </p>
                 </li>
               ))}
@@ -98,10 +98,10 @@ export default async function InfluencerProfile({ params }: Props) {
           )}
         </section>
 
-        {/* 하단: 목록으로 돌아가기 */}
+        {/* Back to list */}
         <div className="mt-12 flex justify-end">
           <Button variant="outline" asChild>
-            <Link href="/influencers">목록으로 돌아가기</Link>
+            <Link href="/influencers">Back to list</Link>
           </Button>
         </div>
       </div>

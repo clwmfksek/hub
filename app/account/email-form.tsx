@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 import { getBrowserClient } from "@/lib/supabase/browser";
 
 const schema = z.object({
-  email: z.string().email("이메일 형식이 올바르지 않습니다"),
+  email: z.string().email("Invalid email format"),
 });
 
 export default function EmailForm({ initialEmail }: { initialEmail: string }) {
@@ -28,21 +28,22 @@ export default function EmailForm({ initialEmail }: { initialEmail: string }) {
     );
     if (error) {
       toast({
-        title: "변경 실패",
+        title: "Update failed",
         description: error.message,
         variant: "destructive",
       });
       return;
     }
     toast({
-      title: "확인 메일 발송",
-      description: "메일의 확인 링크를 클릭하면 이메일 변경이 완료됩니다.",
+      title: "Verification email sent",
+      description:
+        "Click the verification link in the email to complete your change.",
     });
   };
 
   return (
     <form className="space-y-3" onSubmit={form.handleSubmit(onSubmit)}>
-      <label className="text-sm font-medium">이메일</label>
+      <label className="text-sm font-medium">Email</label>
       <Input type="email" {...form.register("email")} className="h-11" />
       {form.formState.errors.email && (
         <p className="text-sm text-red-600">
@@ -50,7 +51,7 @@ export default function EmailForm({ initialEmail }: { initialEmail: string }) {
         </p>
       )}
       <Button type="submit" variant="outline" className="w-full">
-        이메일 변경 메일 보내기
+        Send verification email
       </Button>
     </form>
   );

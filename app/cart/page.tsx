@@ -13,7 +13,7 @@ export default function ShoppingCart() {
   const shipping = 0; // Free shipping
   const total = subtotal + shipping;
 
-  // 구매 진행은 별도 페이지에서 선택합니다
+  // Purchase flow is handled on a separate page
 
   if (items.length === 0) {
     return (
