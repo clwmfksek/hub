@@ -15,6 +15,23 @@ import { useCart } from "../context/cart-context";
 import { useSearchParams } from "next/navigation";
 import { categories, stacks, categorySlugToName } from "./data";
 
+function parseOwner(name: string): { displayName: string; owner?: string } {
+  const pairs: Array<[string, string]> = [
+    ["Sinclair ", "Dr. David Sinclair"],
+    ["Huberman ", "Dr. Andrew Huberman"],
+    ["Hyman ", "Dr. Mark Hyman"],
+    ["Brecka ", "Gary Brecka"],
+    ["Verdin ", "Dr. Eric Verdin"],
+    ["Blueprint ", "Bryan Johnson (Blueprint)"],
+  ];
+  for (const [prefix, owner] of pairs) {
+    if (name.startsWith(prefix)) {
+      return { displayName: name.slice(prefix.length), owner };
+    }
+  }
+  return { displayName: name };
+}
+
 export default function StackLibrary() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [addedItems, setAddedItems] = useState<Set<string>>(new Set());
@@ -67,12 +84,12 @@ export default function StackLibrary() {
           {categories.map((c) => (
             <Button
               key={c.name}
-              variant={activeFilter === c.name ? "default" : "outline"}
+              variant="outline"
               onClick={() => setActiveFilter(c.name)}
-              className={`rounded-full ${
+              className={`rounded-full transition-colors focus-visible:ring-2 focus-visible:ring-stone-300 ${
                 activeFilter === c.name
-                  ? `${c.color} text-gray-800 hover:opacity-90`
-                  : "hover:bg-gray-100"
+                  ? `bg-gray-200 text-gray-900 border border-gray-300 hover:bg-gray-200 hover:text-gray-900`
+                  : `${c.hoverBg ?? "hover:bg-gray-100"} hover:text-gray-800`
               }`}
             >
               {c.name}
@@ -101,14 +118,31 @@ export default function StackLibrary() {
                 <div className="flex-1 w-full">
                   <div className="flex items-center gap-2 mb-3">
                     <span
-                      className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${theme?.color} text-gray-800 border`}
+                      className={`text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full ${
+                        theme?.color
+                      } text-gray-800 border border-stone-200/70 ring-1 ring-stone-200/60 shadow-sm transition-colors duration-200 ${
+                        theme?.hoverBg ??
+                        "hover:ring-stone-300 hover:shadow-md hover:brightness-95 hover:saturate-125"
+                      } active:scale-[0.99]`}
                     >
                       {s.category}
                     </span>
                   </div>
-                  <h2 className="text-2xl font-bold mb-2 text-gray-800">
-                    {s.name}
-                  </h2>
+                  {(() => {
+                    const { displayName, owner } = parseOwner(s.name);
+                    return (
+                      <>
+                        <h2 className="text-2xl font-bold mb-1 text-gray-800">
+                          {displayName}
+                        </h2>
+                        {owner && (
+                          <div className="text-xs text-gray-500 mb-2">
+                            by {owner}
+                          </div>
+                        )}
+                      </>
+                    );
+                  })()}
                   <p className="text-gray-600 text-sm mb-4 leading-relaxed">
                     {s.description}
                   </p>

@@ -19,13 +19,37 @@ export default async function StackDetailPage({ params }: Props) {
           {/* Info card */}
           <div className="lg:col-span-2 bg-white rounded-2xl shadow-lg p-8">
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-100 text-gray-800 border">
+              <span className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-100 text-gray-800 border border-stone-200/70 ring-1 ring-stone-200/60 shadow-sm transition-colors duration-200">
                 {stack.category}
               </span>
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-2">
-              {stack.name}
+            <h1 className="text-3xl md:text-4xl font-bold mb-1">
+              {stack.name.replace(
+                /^(Sinclair|Huberman|Hyman|Brecka|Verdin|Blueprint)\s+/,
+                ""
+              )}
             </h1>
+            {(() => {
+              const m = stack.name.match(
+                /^(Sinclair|Huberman|Hyman|Brecka|Verdin|Blueprint)\s+/
+              );
+              const map: Record<string, string> = {
+                Sinclair: "Dr. David Sinclair",
+                Huberman: "Dr. Andrew Huberman",
+                Hyman: "Dr. Mark Hyman",
+                Brecka: "Gary Brecka",
+                Verdin: "Dr. Eric Verdin",
+                Blueprint: "Bryan Johnson (Blueprint)",
+              };
+              if (m) {
+                return (
+                  <div className="text-xs text-gray-500 mb-2">
+                    by {map[m[1]]}
+                  </div>
+                );
+              }
+              return null;
+            })()}
             <p className="text-gray-600 mb-6">{stack.description}</p>
 
             {/* Supplement Breakdown */}

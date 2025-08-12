@@ -23,7 +23,12 @@ export default function InfluencerDirectory() {
 
   useEffect(() => {
     const allSup = Array.from(
-      new Set(influencers.flatMap((inf) => inf.supplements ?? []))
+      new Set(
+        influencers.flatMap((inf) => [
+          ...(inf.supplements ?? []),
+          ...(inf.cardSupplements ?? []),
+        ])
+      )
     );
     if (allSup.length === 0) return;
     const params = new URLSearchParams();
@@ -69,12 +74,7 @@ export default function InfluencerDirectory() {
                   <p className="text-sage-green font-medium">
                     {influencer.specialty}
                   </p>
-                  {influencer.bio && (
-                    <p className="text-sm text-gray-600 mt-2">
-                      {influencer.bio}
-                    </p>
-                  )}
-                  {/* 복용/비복용 섹션 제거 (요청) */}
+                  {/* Bio moved to full profile page */}
                 </div>
               </div>
               <div className="mt-6 flex-grow">
@@ -116,7 +116,18 @@ export default function InfluencerDirectory() {
                     "Energy Boost",
                     "Longevity & Immune",
                   ];
-                  const present = new Set(influencer.coveredCategories ?? []);
+                  const list =
+                    influencer.cardSupplements ?? influencer.supplements ?? [];
+                  const hasAnyCat = list.some((s) => Boolean(catMap[s]));
+                  let present: Set<string>;
+                  if (hasAnyCat) {
+                    const cats = list.flatMap(
+                      (s) => catMap[s]?.categories ?? []
+                    );
+                    present = new Set(cats);
+                  } else {
+                    present = new Set(influencer.coveredCategories ?? []);
+                  }
                   const missing = all.filter((c) => !present.has(c));
                   return (
                     <div className="mt-4">
@@ -154,6 +165,31 @@ export default function InfluencerDirectory() {
                       .reduce((a, b) => a + b, 0)}
                     image={influencer.image}
                     source="influencers"
+                    missingCategories={(() => {
+                      const all = [
+                        "Sleep Optimization",
+                        "Cognitive Enhancement",
+                        "Beauty / Inner Glow",
+                        "Metabolic & Weight",
+                        "Energy Boost",
+                        "Longevity & Immune",
+                      ];
+                      const list =
+                        influencer.cardSupplements ??
+                        influencer.supplements ??
+                        [];
+                      const hasAnyCat = list.some((s) => Boolean(catMap[s]));
+                      let present: Set<string>;
+                      if (hasAnyCat) {
+                        const cats = list.flatMap(
+                          (s) => catMap[s]?.categories ?? []
+                        );
+                        present = new Set(cats);
+                      } else {
+                        present = new Set(influencer.coveredCategories ?? []);
+                      }
+                      return all.filter((c) => !present.has(c));
+                    })()}
                   />
                   <Button variant="outline" asChild>
                     <Link
