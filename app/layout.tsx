@@ -17,6 +17,34 @@ export const metadata: Metadata = {
   description:
     "Discover curated supplement stacks, backed by science and nature, to unlock your full potential.",
   generator: "v0.dev",
+  metadataBase: new URL("https://www.regimenhub.com"),
+  alternates: {
+    canonical: "https://www.regimenhub.com",
+  },
+  openGraph: {
+    title: "RegimenHub - Wellness Supplements",
+    description:
+      "Discover curated supplement stacks, backed by science and nature, to unlock your full potential.",
+    url: "https://www.regimenhub.com",
+    siteName: "RegimenHub",
+    images: [
+      {
+        url: "/placeholder-logo.png",
+        width: 1200,
+        height: 630,
+        alt: "RegimenHub",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "RegimenHub - Wellness Supplements",
+    description:
+      "Discover curated supplement stacks, backed by science and nature, to unlock your full potential.",
+    images: ["/placeholder-logo.png"],
+  },
 };
 
 export default async function RootLayout({

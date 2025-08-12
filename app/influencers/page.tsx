@@ -3,14 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+// removed search and filter UI
 import { Button } from "@/components/ui/button";
 import StackChip from "./StackChip";
 import { influencers } from "./data";
@@ -18,30 +11,12 @@ import { influencers } from "./data";
 // Data is managed in './data'
 
 export default function InfluencerDirectory() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [filter, setFilter] = useState("All");
-  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  // no search/filter state
+  // show full bios on cards
 
-  const filteredInfluencers = influencers.filter(
-    (inf) =>
-      inf.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (filter === "All" || inf.specialty.includes(filter))
-  );
+  const filteredInfluencers = influencers;
 
-  const specialties = [
-    "All",
-    "Wellness Coach",
-    "Biohacker",
-    "Nutritionist",
-    "Longevity Expert",
-    "Fitness Guru",
-    "Mental Clarity",
-    "Dr. David Sinclair",
-    "Dr. Andrew Huberman",
-    "Dr. Mark Hyman",
-    "Longevity Enthusiast",
-    "human biologist",
-  ];
+  // specialties removed
 
   return (
     <div className="pt-24">
@@ -55,27 +30,7 @@ export default function InfluencerDirectory() {
           </p>
         </header>
 
-        <div className="flex flex-col md:flex-row gap-4 mb-12">
-          <Input
-            type="text"
-            placeholder="Find by name..."
-            className="flex-grow"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Select value={filter} onValueChange={setFilter}>
-            <SelectTrigger className="w-full md:w-[240px]">
-              <SelectValue placeholder="Filter by specialty" />
-            </SelectTrigger>
-            <SelectContent>
-              {specialties.map((spec) => (
-                <SelectItem key={spec} value={spec}>
-                  {spec}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
+        {/* search and filter UI removed */}
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredInfluencers.map((influencer) => (
@@ -97,28 +52,9 @@ export default function InfluencerDirectory() {
                     {influencer.specialty}
                   </p>
                   {influencer.bio && (
-                    <div>
-                      <p
-                        className={`text-sm text-gray-600 mt-2 ${
-                          expanded[influencer.name] ? "" : "line-clamp-3"
-                        }`}
-                      >
-                        {influencer.bio}
-                      </p>
-                      <button
-                        type="button"
-                        aria-expanded={Boolean(expanded[influencer.name])}
-                        className="mt-1 text-xs text-sage-green underline hover:text-sage-green-700"
-                        onClick={() =>
-                          setExpanded((prev) => ({
-                            ...prev,
-                            [influencer.name]: !prev[influencer.name],
-                          }))
-                        }
-                      >
-                        {expanded[influencer.name] ? "Less" : "More"}
-                      </button>
-                    </div>
+                    <p className="text-sm text-gray-600 mt-2">
+                      {influencer.bio}
+                    </p>
                   )}
                 </div>
               </div>
