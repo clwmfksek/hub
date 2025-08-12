@@ -15,6 +15,7 @@ export default function ShoppingCart() {
     updateQuantity,
     updateBillingType,
     getTotalPrice,
+    clearCart,
   } = useCart();
 
   const subtotal = getTotalPrice();
@@ -167,7 +168,7 @@ export default function ShoppingCart() {
                       },
                       {} as Record<string, number>
                     );
-                    await fetch("/api/waitlist", {
+                    const res = await fetch("/api/waitlist", {
                       method: "POST",
                       headers: { "Content-Type": "application/json" },
                       body: JSON.stringify({
@@ -195,11 +196,12 @@ export default function ShoppingCart() {
                         total,
                       }),
                     });
+                    // Don't clear locally yet; let waitlist page clear to avoid flicker
                   } catch {}
                   window.location.href = "/waitlist";
                 }}
               >
-                Join waitlist
+                Process to Purchase
               </Button>
             </div>
           </div>

@@ -8,6 +8,14 @@ export default async function WaitlistPage() {
   } = await supabase.auth.getUser();
   if (!user) redirect("/login");
 
+  // Clear cart on arrival (server → client hint via script)
+  // We can't directly mutate client state here; inject a tiny script to clear storage key
+  const clearCartScript = `
+    try {
+      localStorage.removeItem('regimenhub:cart');
+    } catch {}
+  `;
+
   return (
     <div className="pt-24 bg-sandy-beige min-h-screen">
       <div className="container px-6 py-16 max-w-2xl text-center">
@@ -16,6 +24,7 @@ export default async function WaitlistPage() {
           Thanks for your interest! We'll notify you as soon as your order is
           ready to process.
         </p>
+        <script dangerouslySetInnerHTML={{ __html: clearCartScript }} />
       </div>
     </div>
   );

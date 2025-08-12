@@ -38,29 +38,31 @@ export default function StackCard({
     <div
       className={
         className ??
-        "group bg-white rounded-2xl shadow-lg border border-stone-200/60 overflow-hidden hover:-translate-y-1 transition-transform"
+        "group bg-white rounded-xl shadow-md border border-stone-200/60 overflow-hidden hover:-translate-y-0.5 transition-transform"
       }
     >
-      <div className="relative h-48 w-full overflow-hidden">
+      <div className="relative h-32 w-full overflow-hidden">
         <Image
           src={stack.image || "/placeholder.svg"}
           alt={displayName}
           fill
-          className="object-cover group-hover:scale-105 transition-transform duration-300"
+          className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
         />
       </div>
-      <div className="p-6">
-        <div className="text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-full bg-gray-100 text-gray-800 border border-stone-200/70 ring-1 ring-stone-200/60 shadow-sm w-max mb-3">
+      <div className="p-4">
+        <div className="text-[11px] font-semibold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-gray-100 text-gray-800 border border-stone-200 w-max mb-2">
           {stack.category}
         </div>
-        <h3 className="text-xl font-semibold mb-1">{displayName}</h3>
-        {owner && <div className="text-xs text-gray-500 mb-2">by {owner}</div>}
-        <p className="text-gray-600 text-sm line-clamp-2 mb-4">
+        <h3 className="text-lg font-semibold mb-0.5">{displayName}</h3>
+        {owner && (
+          <div className="text-[11px] text-gray-500 mb-2">by {owner}</div>
+        )}
+        <p className="text-gray-600 text-sm line-clamp-2 mb-3">
           {stack.description}
         </p>
-        <div className="mt-1 flex items-center justify-between">
+        <div className="mt-0.5 flex items-center justify-between">
           <div className="flex items-baseline gap-2">
-            <span className="text-sage-green font-bold text-lg">
+            <span className="text-sage-green font-semibold text-base">
               ${stack.price}
             </span>
           </div>
@@ -70,6 +72,7 @@ export default function StackCard({
             price={stack.price}
             image={stack.image}
             source={source}
+            className="h-9 px-3 py-1 text-sm"
           />
         </div>
       </div>

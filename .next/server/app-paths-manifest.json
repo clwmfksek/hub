@@ -1,6 +1,7 @@
 {
-  "/api/supplement-cats/route": "app/api/supplement-cats/route.js",
-  "/page": "app/page.js",
-  "/influencers/[name]/page": "app/influencers/[name]/page.js",
-  "/stacks/page": "app/stacks/page.js"
+  "/api/waitlist/route": "app/api/waitlist/route.js",
+  "/stacks/page": "app/stacks/page.js",
+  "/cart/page": "app/cart/page.js",
+  "/waitlist/page": "app/waitlist/page.js",
+  "/page": "app/page.js"
 }
